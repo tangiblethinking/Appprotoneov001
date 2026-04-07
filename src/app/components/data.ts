@@ -250,7 +250,7 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1586936893354-362ad6ae47ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXJ2aWNlJTIwZGVzaWduJTIwYmx1ZXByaW50JTIwd29ya3Nob3B8ZW58MXx8fHwxNzcyMzQ0OTQ0fDA&ixlib=rb-4.1.0&q=80&w=1080',
     ],
     // ─── Project 2: Membership Join Experience ─────────────────────────────────
-    prototypeUrl: 'https://director-case-study-ux-bgoals.vercel.app/',
+    prototypeUrl: 'https://speech-elude-24322158.figma.site',
     prototypeLabel: 'Experience the prototype',
   },
   {
