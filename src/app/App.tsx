@@ -653,7 +653,7 @@ export default function App() {
 
   // Scroll tracking
   useEffect(() => {
-    const sections = ['delivered-solutions', 'experience', 'studies', 'about', 'contact'];
+    const sections = ['featured-solutions', 'experience', 'studies', 'about', 'contact'];
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
       const offset = 130;
@@ -723,7 +723,7 @@ export default function App() {
   const mobileResults = doSearch(mobileSearch);
 
   const navLinks = [
-    { id: 'delivered-solutions', label: 'Solutions' },
+    { id: 'featured-solutions', label: 'Solutions' },
     { id: 'experience', label: 'Experience' },
     { id: 'studies', label: 'Studies' },
     { id: 'about', label: 'About' },
@@ -895,7 +895,7 @@ export default function App() {
         </div>
         <div className="side-sheet-nav">
           {[
-            { id: 'delivered-solutions', icon: 'analytics', label: 'Delivered Solutions' },
+            { id: 'featured-solutions', icon: 'analytics', label: 'Featured Solutions' },
             { id: 'experience', icon: 'work_outline', label: 'Experience' },
             { id: 'studies', icon: 'school', label: 'Studies' },
             { id: 'about', icon: 'person_outline', label: 'About' },
@@ -973,8 +973,11 @@ export default function App() {
               <h1 className="hero-title reveal reveal-delay-1">
                 <E editKey="hero.title.1" value="Delivering" />{' '}<em><E editKey="hero.title.2" value="Solutions" /></em><br />
               </h1>
+              <p className="hero-subtitle reveal reveal-delay-2">
+                <E editKey="hero.subtitle" value="Designing digital experiences that drive measurable outcomes for people and business." />
+              </p>
               <div className="hero-actions reveal reveal-delay-3">
-                <a href="#delivered-solutions" className="btn btn-filled btn-lg" onClick={(e) => { e.preventDefault(); scrollTo('delivered-solutions'); }}>
+                <a href="#featured-solutions" className="btn btn-filled btn-lg" onClick={(e) => { e.preventDefault(); scrollTo('featured-solutions'); }}>
                   <span className="material-icons-outlined">rocket_launch</span>
                   <E editKey="hero.cta" value="View Solutions" />
                 </a>
@@ -996,10 +999,82 @@ export default function App() {
               ))}
             </div>
             <div className="hero-actions-mobile reveal reveal-delay-3" style={{ display: 'none' }}>
-              <a href="#delivered-solutions" className="btn btn-filled btn-lg" onClick={(e: React.MouseEvent) => { e.preventDefault(); scrollTo('delivered-solutions'); }}>
+              <a href="#featured-solutions" className="btn btn-filled btn-lg" onClick={(e: React.MouseEvent) => { e.preventDefault(); scrollTo('featured-solutions'); }}>
                 <span className="material-icons-outlined">rocket_launch</span>
                 <E editKey="hero.cta" value="View Solutions" />
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURED SOLUTIONS */}
+        <section id="featured-solutions" className="section parallax-section" style={{ paddingTop: 'var(--sp-96)', paddingBottom: 'var(--sp-96)' }}>
+          <div className="section-bg-wrap">
+            <div className="section-bg-inner" style={{ background: 'var(--md-surface)', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(27,154,170,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(27,154,170,0.04) 1px,transparent 1px)', backgroundSize: '64px 64px' }} />
+              <div style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,rgba(27,154,170,0.08) 0%,transparent 70%)', pointerEvents: 'none' }} />
+              <div style={{ position: 'absolute', top: '10%', left: '-8%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle,rgba(13,122,135,0.06) 0%,transparent 70%)', pointerEvents: 'none' }} />
+            </div>
+            <div className="section-bg-overlay" style={{ background: 'rgba(245,241,227,0.92)' }} />
+          </div>
+          <div className="parallax-inner">
+            <div className="section-header">
+              <div className="section-eyebrow reveal"><E editKey="featured.eyebrow" value="Highlighted Work" /></div>
+              <h2 className="section-title reveal reveal-delay-1"><E editKey="featured.title" value="Featured Solutions" /></h2>
+              <p className="section-subtitle reveal reveal-delay-2"><E editKey="featured.subtitle" value="A curated selection of impactful projects across industries." /></p>
+            </div>
+
+            {/* Filter row */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', gap: 'var(--sp-16)', marginBottom: 'var(--sp-32)' }}>
+              <div className="proj-filter-tabs reveal">
+                {[{ key: 'all', label: 'All' }, { key: 'delivered', label: 'Delivered' }, { key: 'inprogress', label: 'In Progress' }, { key: 'planned', label: 'Planned' }].map((f, i) => (
+                  <button key={f.key} className={`proj-filter-btn ${projectFilter === f.key ? 'active' : ''}`} onClick={() => setProjectFilter(f.key)}>
+                    <E editKey={`project.filter.${i}`} value={f.label} />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Project cards */}
+            <div className="projects-grid" id="projects-grid">
+              {projects.filter(p => projectFilter === 'all' || getFilterStatus(p.status) === projectFilter).map((p, i) => (
+                <div key={`${p.id}-${projectFilter}`} className="project-card" style={{ animation: 'fadeInUp 0.3s ease forwards', animationDelay: `${i * 60}ms` }} data-status={getFilterStatus(p.status)}>
+                  <div className="project-card-img">
+                    <div className="project-card-img-inner" style={{ background: p.bgGradient }}>
+                      <EI editKey={`img.project.${p.id}.image`} src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: (p.imageFit as React.CSSProperties['objectFit']) || 'cover', objectPosition: p.imagePosition || 'center' }} />
+                      <span className="material-icons-outlined project-card-icon">{p.icon}</span>
+                    </div>
+                    <span className={`project-chip ${p.statusClass}`}><E editKey={`project.${p.id}.status`} value={p.status} /></span>
+                  </div>
+                  <div className="project-card-body">
+                    <div className="project-card-title"><E editKey={`project.${p.id}.title`} value={p.title} /></div>
+                    <div className="project-card-desc"><E editKey={`project.${p.id}.desc`} value={p.desc} /></div>
+                    <div className="progress-bar-wrap">
+                      <div className="progress-bar-label"><span><E editKey={`project.${p.id}.progressLabel`} value={p.progressLabel} /></span><span><E editKey={`project.${p.id}.progressValue`} value={p.progressValue} /></span></div>
+                      <div className="progress-bar-track"><div className="progress-bar-fill" style={{ width: `${p.completion}%` }} /></div>
+                    </div>
+                    <div className="project-card-stats">
+                      {p.stats.map((s, si) => (
+                        <div key={si} className="project-stat"><span className="material-icons-outlined">{s.icon}</span><E editKey={`project.${p.id}.stat.${si}`} value={s.label} /></div>
+                      ))}
+                    </div>
+                    <div className="project-card-tags">
+                      {p.tags.slice(0, 3).map((t, ti) => <span key={ti} className="tag"><E editKey={`project.${p.id}.tag.${ti}`} value={t} /></span>)}
+                    </div>
+                    <div className="project-card-footer">
+                      <span className="project-stat" style={{ border: 'none', background: 'none', padding: 0 }}>
+                        <span className="material-icons-outlined" style={{ fontSize: 12, color: p.statusClass === 'chip-delivered' ? 'var(--clr-teal)' : p.statusClass === 'chip-inprogress' ? '#E65100' : '#1565C0' }}>
+                          {p.statusClass === 'chip-delivered' ? 'task_alt' : p.statusClass === 'chip-inprogress' ? 'pending' : 'schedule'}
+                        </span>
+                        <E editKey={`project.${p.id}.status2`} value={p.status} />
+                      </span>
+                      <button className="proj-card-expand-btn" onClick={() => openProjectModal(p.id)}>
+                        <span className="material-icons-outlined">open_in_full</span><E editKey="project.viewCase" value="View Case" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -1184,58 +1259,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Filter + Projects */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--sp-16)', marginBottom: 'var(--sp-32)' }}>
-              <h3 className="section-title reveal" style={{ fontSize: 'var(--type-headline-small)', marginBottom: 0 }}><E editKey="solutions.projects.heading" value="Featured Projects" /></h3>
-              <div className="proj-filter-tabs reveal">
-                {[{ key: 'all', label: 'All' }, { key: 'delivered', label: 'Delivered' }, { key: 'inprogress', label: 'In Progress' }, { key: 'planned', label: 'Planned' }].map((f, i) => (
-                  <button key={f.key} className={`proj-filter-btn ${projectFilter === f.key ? 'active' : ''}`} onClick={() => setProjectFilter(f.key)}>
-                    <E editKey={`project.filter.${i}`} value={f.label} />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="projects-grid" id="projects-grid">
-              {projects.filter(p => projectFilter === 'all' || getFilterStatus(p.status) === projectFilter).map((p, i) => (
-                <div key={`${p.id}-${projectFilter}`} className="project-card" style={{ animation: 'fadeInUp 0.3s ease forwards', animationDelay: `${i * 60}ms` }} data-status={getFilterStatus(p.status)}>
-                  <div className="project-card-img">
-                    <div className="project-card-img-inner" style={{ background: p.bgGradient }}>
-                      <EI editKey={`img.project.${p.id}.image`} src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: (p.imageFit as React.CSSProperties['objectFit']) || 'cover', objectPosition: p.imagePosition || 'center' }} />
-                      <span className="material-icons-outlined project-card-icon">{p.icon}</span>
-                    </div>
-                    <span className={`project-chip ${p.statusClass}`}><E editKey={`project.${p.id}.status`} value={p.status} /></span>
-                  </div>
-                  <div className="project-card-body">
-                    <div className="project-card-title"><E editKey={`project.${p.id}.title`} value={p.title} /></div>
-                    <div className="project-card-desc"><E editKey={`project.${p.id}.desc`} value={p.desc} /></div>
-                    <div className="progress-bar-wrap">
-                      <div className="progress-bar-label"><span><E editKey={`project.${p.id}.progressLabel`} value={p.progressLabel} /></span><span><E editKey={`project.${p.id}.progressValue`} value={p.progressValue} /></span></div>
-                      <div className="progress-bar-track"><div className="progress-bar-fill" style={{ width: `${p.completion}%` }} /></div>
-                    </div>
-                    <div className="project-card-stats">
-                      {p.stats.map((s, si) => (
-                        <div key={si} className="project-stat"><span className="material-icons-outlined">{s.icon}</span><E editKey={`project.${p.id}.stat.${si}`} value={s.label} /></div>
-                      ))}
-                    </div>
-                    <div className="project-card-tags">
-                      {p.tags.slice(0, 3).map((t, ti) => <span key={ti} className="tag"><E editKey={`project.${p.id}.tag.${ti}`} value={t} /></span>)}
-                    </div>
-                    <div className="project-card-footer">
-                      <span className="project-stat" style={{ border: 'none', background: 'none', padding: 0 }}>
-                        <span className="material-icons-outlined" style={{ fontSize: 12, color: p.statusClass === 'chip-delivered' ? 'var(--clr-teal)' : p.statusClass === 'chip-inprogress' ? '#E65100' : '#1565C0' }}>
-                          {p.statusClass === 'chip-delivered' ? 'task_alt' : p.statusClass === 'chip-inprogress' ? 'pending' : 'schedule'}
-                        </span>
-                        <E editKey={`project.${p.id}.status2`} value={p.status} />
-                      </span>
-                      <button className="proj-card-expand-btn" onClick={() => openProjectModal(p.id)}>
-                        <span className="material-icons-outlined">open_in_full</span><E editKey="project.viewCase" value="View Case" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 

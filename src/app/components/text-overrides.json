@@ -627,5 +627,9 @@
   "study.5.score": "95%",
   "study.5.scoreLabel": "Score",
   "study.5.title": "Business, Data analysis and Software Development",
-  "study.viewBtn": "View"
+  "study.viewBtn": "View",
+  "featured.eyebrow": "Highlighted Work",
+  "featured.title": "Featured Solutions",
+  "featured.subtitle": "A curated selection of impactful projects across industries.",
+  "hero.subtitle": "Gather → Design → Build → Test → Repeat."
 }

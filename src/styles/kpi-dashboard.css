@@ -626,6 +626,14 @@ ul, ol { list-style: none; }
   color: var(--clr-teal-light);
 }
 
+.hero-subtitle {
+  font-size: var(--type-body-large);
+  color: rgba(255, 255, 255, 0.56);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: var(--sp-32);
+}
+
 .hero-actions {
   display: flex;
   gap: var(--sp-16);
@@ -1351,7 +1359,7 @@ ul, ol { list-style: none; }
 
 .exp-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-16);
   margin-bottom: var(--sp-40);
 }
